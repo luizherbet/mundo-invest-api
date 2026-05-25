@@ -25,3 +25,10 @@ Projeto em construção.
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+```
+
+## Banco de dados
+
+SQLite local: arquivo `mundo_invest.db` na raiz (ignorado pelo Git).
+
+As tabelas são criadas via `init_db()` na inicialização da API (commit futuro).
