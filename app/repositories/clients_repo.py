@@ -29,3 +29,16 @@ class ClientsRepository:
         self.db.commit()
         self.db.refresh(client)
         return client
+
+    def update_status_and_prioridade(
+        self,
+        client: Client,
+        *,
+        status: str,
+        prioridade: str,
+    ) -> Client:
+        client.status = status
+        client.prioridade = prioridade
+        self.db.commit()
+        self.db.refresh(client)
+        return client
