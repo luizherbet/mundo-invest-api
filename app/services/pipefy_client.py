@@ -13,8 +13,20 @@ FIELD_STATUS_CLIENTE = "status_cliente"
 FIELD_PRIORIDADE = "prioridade"
 
 CREATE_CARD_MUTATION = """
-mutation CreateCard($pipeId: ID!, $fields: [FieldValueInput]!) {
-  createCard(input: { pipe_id: $pipeId, fields_attributes: $fields }) {
+mutation CreateCard(
+  $pipeId: ID!
+  $clienteNome: String!
+  $clienteEmail: String!
+  $valorPatrimonio: String!
+) {
+  createCard(input: {
+    pipe_id: $pipeId
+    fields_attributes: [
+      { field_id: "cliente_nome", field_value: $clienteNome }
+      { field_id: "cliente_email", field_value: $clienteEmail }
+      { field_id: "valor_patrimonio", field_value: $valorPatrimonio }
+    ]
+  }) {
     card {
       id
     }
@@ -45,11 +57,9 @@ def build_create_card_payload(
     """Monta mutation + variables para createCard (doc Pipefy)."""
     variables = {
         "pipeId": pipe_id,
-        "fields": [
-            {"field_id": FIELD_CLIENTE_NOME, "field_value": cliente_nome},
-            {"field_id": FIELD_CLIENTE_EMAIL, "field_value": cliente_email},
-            {"field_id": FIELD_VALOR_PATRIMONIO, "field_value": str(valor_patrimonio)},
-        ],
+        "clienteNome": cliente_nome,
+        "clienteEmail": cliente_email,
+        "valorPatrimonio": str(valor_patrimonio),
     }
     return {
         "query": CREATE_CARD_MUTATION.strip(),
